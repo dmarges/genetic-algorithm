@@ -35,27 +35,12 @@ module.exports = function(grunt) {
           destination: 'doc'
         }
       }
-    },
-    code_quality_report: {
-      options: {
-         dir: 'test/results',
-         file: 'result.json'
-      },
-      your_target: {
-         results: {
-           junit: 'path/to/junit/dir/results-file.xml'
-           coverage: 'path/to/coverage/dir/*.json'
-           jshint: 'path/to/jshint/div/result-file.xml'
-         }
-      }
     }
   });
 
   grunt.loadNpmTasks('grunt-contrib-jshint');
 
   grunt.loadNpmTasks('grunt-contrib-jasmine');
-
-  grunt.loadNpmTasks('grunt-code-quality-report');
 
   grunt.loadNpmTasks('grunt-jsdoc');
 

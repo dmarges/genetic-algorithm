@@ -126,12 +126,11 @@ GeneticAlgorithm.prototype = {
 	 * to split up the father chromosome and appends another half of a chromosome from the mother.
 	 * @param {Genome} father - A genome in the population selected by fitness.
 	 * @param {Genome} mother - A genome in the population selected by fitness.
-	 * @param {Genome} baby - A new genome that will be created from the mother and father.
 	 * @author Donnie Marges <dmarges@postmedia.com>
 	 * @version 0.0.1
 	 */
-	crossover: function(father, mother, baby) {
-		if(!father || !mother || !baby) {
+	crossover: function(father, mother) {
+		if(!father || !mother) {
 			return;
 		}
 
@@ -141,7 +140,10 @@ GeneticAlgorithm.prototype = {
 		}
 
 		/** This needs to be an integer value to properly perform the crossover. */
-		var crossoverPoint = Math.floor(((Math.random() * this.lengthOfChromosome) + 1));
+		var crossoverPoint = Math.floor(((Math.random() * this.lengthOfChromosome) + 1)),
+
+			/** The baby that the two parents will create together. */
+			baby = new Genome();
 
 		for(var i = 0, len = crossoverPoint; i < len; i++) {
 			baby.chromosome += father.chromosome[i].toString();
@@ -155,18 +157,89 @@ GeneticAlgorithm.prototype = {
 	},
 
 	/**
+	 * This function uses the popular Partially-Mapped Crossover type of crossover method in Genetic Algorithms.
+	 * How it works is that you first choose two crossover points randomly. Then you look at what genes those points contain and 
+	 * map those positions on the two parent chromosomes. Last, you go through each parents genes and swap the gene whereever a gene
+	 * is found that matches one of those in your map.
+	 * IMPORTANT: This is for use when encoding integers as genes in a chromosome, won't work with Binary Strings.
+	 * @param {Genome} father - A genome in the population selected by fitness.
+	 * @param {Genome} mother - A genome in the population selected by fitness.
+	 * @author Donnie Marges <dmarges@postmedia.com>
+	 * @version 0.0.1
+	 */
+	pmxCrossover: function(father, mother) {
+		if(!father || !mother) {
+			return;
+		}
+
+		var baby = new Genome(false, 1, 8),
+			randomStart = Math.floor(((Math.random() * baby.max) + baby.min)),
+			randomEnd = Math.floor(((Math.random() * baby.max) + randomStart)),
+			parent = Math.round(Math.random()),
+			parentGenome,
+			geneMap = [];
+		
+		/** We randomly pick whether to use the mother or the father as the basis for the child. */
+		if(parent) {
+			parentGenome = mother;
+		} else {
+			parentGenome = father;
+		}
+
+		baby.chromosome = parentGenome.chromosome;
+
+		/** We need to map the genes to swap. */
+		for(var i = randomStart; i < randomEnd; i++) {
+			if(mother.chromosome[i] !== father.chromosome[i]) {
+				var tempObj = {};
+				tempObj.mother = mother.chromosome[i];
+				tempObj.father = father.chromosome[i];
+				geneMap.push(tempObj);
+				console.log('genemap-mother: ' + tempObj.mother);
+				console.log('genemap-father: ' + tempObj.father);
+			} else {
+				console.log('same');
+			}
+		}
+
+		var old = baby.chromosome;
+		console.log('father: ' + father.chromosome);
+		console.log('mother: ' + mother.chromosome);
+		console.log('before: ' + old);
+
+		/** Now we need to swap out the child's genes for those in the gene map. */
+		for(var i = 0, len = this.lengthOfChromosome; i < len; i++) {
+			for(var j = 0, len = geneMap.length; j < len; j++) {
+				if(parentGenome.chromosome[i] === geneMap[j].mother) {
+					baby.chromosome += geneMap[j].father;
+				} else if(parentGenome.chromosome[i] === geneMap[j].father) {
+					baby.chromosome += geneMap[j].mother;
+				} else {
+					baby.chromosome += parentGenome.chromosome[i];
+				}
+
+			}
+		}
+
+		console.log('after: ' + baby.chromosome);
+
+		return baby;
+	},
+
+	/**
 	 * This function will take two parent genomes, and encode a baby chromosome from the two parent
 	 * chromosomes based on whether either parent has a dominant gene.
 	 * @param {Genome} father - A genome in the population selected by fitness.
 	 * @param {Genome} mother - A genome in the population selected by fitness.
-	 * @param {Genome} baby - A new genome that will be created from the mother and father.
 	 * @author Donnie Marges <dmarges@postmedia.com>
 	 * @version 0.0.1
 	 */
-	mate: function(father, mother, baby) {
-		if(!father || !mother || !baby) {
+	mate: function(father, mother) {
+		if(!father || !mother) {
 			return;
 		}
+
+		var baby = new Genome();
 
 		for(var i = 0, len = this.lengthOfChromosome; i < len; i++) {
 			if(father.chromosome[i] === this.dominant) {
@@ -218,6 +291,109 @@ GeneticAlgorithm.prototype = {
 				genome.chromosome[i] = Math.floor((Math.random() * max) + min).toString();
 			}
 		}
+
+		return genome;
+	},
+
+	/**
+	 * This function mutates a Chromosome based on a technique called Exchange Mutation. How it works is that given two random numbers
+	 * that correspond to genes in a genome, this function will swap those two genes.
+	 * @param {Genome} genome - A genome which needs to be mutated.
+	 * @param {number} randomGene1 - A random number to use for gene selection.
+	 * @param {number} randomGene2 - Another random number to use for gene selection.
+	 * @author Donnie Marges <dmarges@postmedia.com>
+	 * @version 0.0.1
+	 */
+	exchangeMutate: function(genome, randomGene1, randomGene2) {
+
+		if(!genome) {
+			return undefined;
+		}
+
+		/** If no numbers are supplied as arguments, we will create them. */
+		if(!randomGene1) {
+			randomGene1 = Math.floor((Math.random() * this.geneLength));
+		}
+
+		if(!randomGene2) {
+			randomGene2 = Math.floor((Math.random() * this.geneLength));
+		}
+
+		/** We split the chromosome into an array. This will help us with manipulating the order of the genes as strings in JS are immutable. */
+		var oldChromosome = genome.chromosome.split(''),
+			gene1 = oldChromosome[randomGene1],
+			gene2 = oldChromosome[randomGene2];
+
+		/** We simply go through the chromosome, find the random spots and swap them with the desired genes. */
+		for(var i = 0; i < oldChromosome.length; i++) {
+			if(i === randomGene1) {
+				oldChromosome[i] = gene2;
+			} else if(i === randomGene2) {
+				oldChromosome[i] = gene1;
+			}
+		}
+
+		/** We convert the array we were using to re-order the chromosome back into a string to be stored with the chromosome. */
+		genome.chromosome = oldChromosome.join('');
+
+		return genome;
+	},
+
+	/**
+	 * This function mutates a Chromosome based on a technique called Scramble Mutation. How it works is that given two numbers
+	 * that represent a range, this function will scramble (randomly shift around) the genes within the given range.
+	 * @param {Genome} genome - A genome which needs to be mutated.
+	 * @param {number} randomGene1 - A random number to use for gene selection.
+	 * @param {number} randomGene2 - Another random number to use for gene selection.
+	 * @author Donnie Marges <dmarges@postmedia.com>
+	 * @version 0.0.1
+	 */
+	scrambleMutate: function(genome, randomGene1, randomGene2) {
+
+		if(!genome) {
+			return undefined;
+		}
+
+		/** If no numbers are supplied as arguments, we will create them. */
+		if(!randomGene1) {
+			randomGene1 = Math.floor((Math.random() * this.geneLength));
+		}
+
+		if(!randomGene2) {
+			randomGene2 = Math.floor((Math.random() * this.geneLength));
+		}
+
+		/**
+		 * We need to ensure that the range is valid. As in, the first number passed in can't be higher or equal to the second number. If either
+		 * of these conditions are true, we need to correct the range.
+		 */
+
+		if(randomGene1 > randomGene2 || randomGene1 === randomGene2) {
+			randomGene1 = Math.floor((Math.random() * randomGene2));
+		}
+
+		/** We split the chromosome into an array. This will help us with manipulating the order of the genes as strings in JS are immutable. */
+		var oldChromosome = genome.chromosome.split(''),
+			scrambledGenes = oldChromosome.slice(randomGene1, randomGene2),
+			randomizer = Math.floor((Math.random() * scrambledGenes.length)),
+			temp,
+			count = 0;
+
+
+		/** Here's where we scramble the genes within the given range. It's not 100% random, but good enough for our purposes. */
+		scrambledGenes.reverse();
+		scrambledGenes.push(scrambledGenes.unshift());
+		temp = scrambledGenes.splice(randomizer, 1);
+		scrambledGenes.push(temp[0]);
+
+		/** We simply go through the chromosome starting at the beginning of our range, and insert the genes in scrambled order back into the array. */
+		for(var i = randomGene1; i < scrambledGenes.length; i++) {
+			oldChromosome[i] = scrambledGenes[count];
+			count++;
+		}
+
+		/** We convert the array we were using to re-order the chromosome back into a string to be stored with the chromosome. */
+		genome.chromosome = oldChromosome.join('');
 
 		return genome;
 	},
@@ -442,5 +618,25 @@ GeneticAlgorithm.prototype = {
 		}
 
 		return returnElitePopulation;
+	},
+
+	replaceGene: function(chromosome, oldGeneIndex, newGene) {
+		if(!chromosome || !oldGeneIndex || !newGene) {
+			console.log('here');
+			return;
+		}
+
+		console.log('chromosome: ' + chromosome);
+		console.log('oldGeneIndex: ' + oldGeneIndex);
+		console.log('newGene: ' + newGene);
+
+		console.log('beg: ' + chromosome.substring(0, oldGeneIndex));
+		console.log('end: ' + chromosome.substring(oldGeneIndex + 1, chromosome.length - oldGeneIndex));
+
+		var returnValue = chromosome.substring(0, oldGeneIndex) + newGene + chromosome.substring(oldGeneIndex + 1, chromosome.length - oldGeneIndex);
+
+		console.log('return value: ' + returnValue);
+
+		return returnValue;
 	}
 };

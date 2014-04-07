@@ -345,7 +345,14 @@ describe("Selecting fit members of population", function() {
 	});
 
 	it("should return a genome from fitness score of each member of population", function() {
+		this.geneticAlgorithm.updateFitnessScore();
 		var selectedGenome = this.geneticAlgorithm.rouletteWheelSelection();
+		expect(selectedGenome).not.toBe(undefined);
+	});
+
+	it("should return a genome using Fitness Proportionate Selection", function() {
+		this.geneticAlgorithm.updateFitnessScore();
+		var selectedGenome = this.geneticAlgorithm.fitnessPropSelection();
 		expect(selectedGenome).not.toBe(undefined);
 	});
 

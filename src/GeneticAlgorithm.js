@@ -505,8 +505,7 @@ GeneticAlgorithm.prototype = {
 	},
 
 	/**
-	 * Selects a genome based on a concept called Roulette Wheel Selection. The idea is that if you think of each genome's
-	 * fitness score as a slice on a roulette wheel, the fitter genomes will have a larger slice of the wheel.
+	 * This is a user defined function that will test each genome's chromosome and assign a fitness score.
 	 * @author Donnie Marges <dmarges@postmedia.com>
 	 * @version 0.0.1
 	 */
@@ -539,6 +538,27 @@ GeneticAlgorithm.prototype = {
 		}
 
 		return this.population[selectedGenome];
+	},
+
+
+	/**
+	 * Selects a genome based how many times a genome is likely to reproduce.
+	 * @author Donnie Marges <dmarges@postmedia.com>
+	 * @version 0.0.1
+	 */
+	fitnessPropSelection: function() {
+		var total = 0,
+			decision = Math.random(),
+			averageFitnessScore = this.averageFitnessScore(),
+			selectedGenome;
+
+		for(var i = 0, len = this.population.length; i < len; i++) {
+			total += this.population[i].fitness / averageFitnessScore;
+
+			if(decision <= total) {
+				return this.population[i];
+			}
+		}
 	},
 
 	/**

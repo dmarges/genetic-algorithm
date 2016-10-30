@@ -1,6 +1,6 @@
 /**
  * The Genetic Algorithm is what manages the Population of Genomes and directs their evolution towards solving a given problem.
- * @author Donnie Marges <dmarges@postmedia.com>
+ * @author Donnie Marges <donniemarges@gmail.com>
  * @version 0.0.1
  */
 
@@ -12,7 +12,7 @@
  * @param {number} mutationRate - This is a number that represents the odds that a mutation of a chromosome will actually occur.
  * @param {boolean} isBinary - Will a binary string be used to encode potential solutions?
  * @constructor
- * @author Donnie Marges <dmarges@postmedia.com>
+ * @author Donnie Marges <donniemarges@gmail.com>
  * @version 0.0.1
  */
 function GeneticAlgorithm(populationSize, lengthOfChromosome, crossoverRate, mutationRate, isBinary) {
@@ -59,7 +59,7 @@ function GeneticAlgorithm(populationSize, lengthOfChromosome, crossoverRate, mut
 
 /**
  * Generalized methods for a genetic algorithm
- * @author Donnie Marges <dmarges@postmedia.com>
+ * @author Donnie Marges <donniemarges@gmail.com>
  * @version 0.0.1
  */
 GeneticAlgorithm.prototype = {
@@ -67,7 +67,7 @@ GeneticAlgorithm.prototype = {
 	/**
 	 * The epoch function is the main loop function of the algorithm. It is not required and you can create your own and just
 	 * use other methods as needed. While a solution as not been found, it manages the reproduction and culling process of the population.
-	 * @author Donnie Marges <dmarges@postmedia.com>
+	 * @author Donnie Marges <donniemarges@gmail.com>
 	 * @version 0.0.1
 	 */
 	epoch: function() {
@@ -105,7 +105,7 @@ GeneticAlgorithm.prototype = {
 	/**
 	 * Creates a starting population of genomes to get the algorithm started.
 	 * @param {number} numOfBits - Number of bits used to encode a chromosome.
-	 * @author Donnie Marges <dmarges@postmedia.com>
+	 * @author Donnie Marges <donniemarges@gmail.com>
 	 * @version 0.0.1
 	 */
 	createStartPopulation: function(numOfBits) {
@@ -126,7 +126,7 @@ GeneticAlgorithm.prototype = {
 	 * to split up the father chromosome and appends another half of a chromosome from the mother.
 	 * @param {Genome} father - A genome in the population selected by fitness.
 	 * @param {Genome} mother - A genome in the population selected by fitness.
-	 * @author Donnie Marges <dmarges@postmedia.com>
+	 * @author Donnie Marges <donniemarges@gmail.com>
 	 * @version 0.0.1
 	 */
 	crossover: function(father, mother) {
@@ -164,7 +164,7 @@ GeneticAlgorithm.prototype = {
 	 * IMPORTANT: This is for use when encoding integers as genes in a chromosome, won't work with Binary Strings.
 	 * @param {Genome} father - A genome in the population selected by fitness.
 	 * @param {Genome} mother - A genome in the population selected by fitness.
-	 * @author Donnie Marges <dmarges@postmedia.com>
+	 * @author Donnie Marges <donniemarges@gmail.com>
 	 * @version 0.0.1
 	 */
 	pmxCrossover: function(father, mother) {
@@ -231,7 +231,7 @@ GeneticAlgorithm.prototype = {
 	 * chromosomes based on whether either parent has a dominant gene.
 	 * @param {Genome} father - A genome in the population selected by fitness.
 	 * @param {Genome} mother - A genome in the population selected by fitness.
-	 * @author Donnie Marges <dmarges@postmedia.com>
+	 * @author Donnie Marges <donniemarges@gmail.com>
 	 * @version 0.0.1
 	 */
 	mate: function(father, mother) {
@@ -260,7 +260,7 @@ GeneticAlgorithm.prototype = {
 	 * @param {Genome} genome - A genome which needs to be mutated.
 	 * @param {number} min - To be used as a the lowest number in a range used for getting a random number.
 	 * @param {number} max - To be used as a the highest number in a range used for getting a random number.
-	 * @author Donnie Marges <dmarges@postmedia.com>
+	 * @author Donnie Marges <donniemarges@gmail.com>
 	 * @version 0.0.1
 	 */
 	mutate: function(genome, min, max) {
@@ -301,7 +301,7 @@ GeneticAlgorithm.prototype = {
 	 * @param {Genome} genome - A genome which needs to be mutated.
 	 * @param {number} randomGene1 - A random number to use for gene selection.
 	 * @param {number} randomGene2 - Another random number to use for gene selection.
-	 * @author Donnie Marges <dmarges@postmedia.com>
+	 * @author Donnie Marges <donniemarges@gmail.com>
 	 * @version 0.0.1
 	 */
 	exchangeMutate: function(genome, randomGene1, randomGene2) {
@@ -345,7 +345,7 @@ GeneticAlgorithm.prototype = {
 	 * @param {Genome} genome - A genome which needs to be mutated.
 	 * @param {number} randomGene1 - A random number to use for gene selection.
 	 * @param {number} randomGene2 - Another random number to use for gene selection.
-	 * @author Donnie Marges <dmarges@postmedia.com>
+	 * @author Donnie Marges <donniemarges@gmail.com>
 	 * @version 0.0.1
 	 */
 	scrambleMutate: function(genome, randomGene1, randomGene2) {
@@ -401,7 +401,7 @@ GeneticAlgorithm.prototype = {
 	/**
 	 * Goes through the population and assigns each genome a fitness score based on how it performs in the
 	 * test function.
-	 * @author Donnie Marges <dmarges@postmedia.com>
+	 * @author Donnie Marges <donniemarges@gmail.com>
 	 * @version 0.0.1
 	 */
 	updateFitnessScore: function() {
@@ -438,7 +438,7 @@ GeneticAlgorithm.prototype = {
 	/**
 	 * Gives algorithm's memory a value.
 	 * @param {String | Int | Array | Object} memoryValue - What you want to set the algorithm's memory to.
-	 * @author Donnie Marges <dmarges@postmedia.com>
+	 * @author Donnie Marges <donniemarges@gmail.com>
 	 * @version 0.0.1
 	 */
 	initMemory: function(memoryValue) {
@@ -451,7 +451,7 @@ GeneticAlgorithm.prototype = {
 
 	/**
 	 * Helper method to clear algorithm's memory.
-	 * @author Donnie Marges <dmarges@postmedia.com>
+	 * @author Donnie Marges <donniemarges@gmail.com>
 	 * @version 0.0.1
 	 */
 	clearMemory: function() {
@@ -462,7 +462,7 @@ GeneticAlgorithm.prototype = {
 	 * Will take a chromosome from a genome and convert it to an array of integer values that represent how to solve a problem.
 	 * @param {Genome} genome - The genome whose chromosome you want to decode.
 	 * @param {Genome} lengthOfGene - The length of the gene in each chromosome.
-	 * @author Donnie Marges <dmarges@postmedia.com>
+	 * @author Donnie Marges <donniemarges@gmail.com>
 	 * @version 0.0.1
 	 */
 	decode: function(genome, lengthOfGene) {
@@ -506,7 +506,7 @@ GeneticAlgorithm.prototype = {
 
 	/**
 	 * This is a user defined function that will test each genome's chromosome and assign a fitness score.
-	 * @author Donnie Marges <dmarges@postmedia.com>
+	 * @author Donnie Marges <donniemarges@gmail.com>
 	 * @version 0.0.1
 	 */
 	testChromosome: function(decodedChromosome, testFunc) {
@@ -520,7 +520,7 @@ GeneticAlgorithm.prototype = {
 	/**
 	 * Selects a genome based on a concept called Roulette Wheel Selection. The idea is that if you think of each genome's
 	 * fitness score as a slice on a roulette wheel, the fitter genomes will have a larger slice of the wheel.
-	 * @author Donnie Marges <dmarges@postmedia.com>
+	 * @author Donnie Marges <donniemarges@gmail.com>
 	 * @version 0.0.1
 	 */
 	rouletteWheelSelection: function() {
@@ -543,7 +543,7 @@ GeneticAlgorithm.prototype = {
 
 	/**
 	 * Selects a genome based how many times a genome is likely to reproduce.
-	 * @author Donnie Marges <dmarges@postmedia.com>
+	 * @author Donnie Marges <donniemarges@gmail.com>
 	 * @version 0.0.1
 	 */
 	fitnessPropSelection: function() {
@@ -563,7 +563,7 @@ GeneticAlgorithm.prototype = {
 
 	/**
 	 * Convenience method to get average fitness score of population.
-	 * @author Donnie Marges <dmarges@postmedia.com>
+	 * @author Donnie Marges <donniemarges@gmail.com>
 	 * @version 0.0.1
 	 */
 	averageFitnessScore: function() {
@@ -574,7 +574,7 @@ GeneticAlgorithm.prototype = {
 	 * A Eugenics function to help keep the population moving towards a solution as there is a possibility population could
 	 * get stuck and never solve a given problem.
 	 * @param {number} benchmark - the cutoff fitness score. Any genomes below this number are removed from population.
-	 * @author Donnie Marges <dmarges@postmedia.com>
+	 * @author Donnie Marges <donniemarges@gmail.com>
 	 * @version 0.0.1
 	 */
 	sterilize: function(benchmark) {
@@ -602,7 +602,7 @@ GeneticAlgorithm.prototype = {
 	 * A Eugenics function that destroys most of population except top 5% in terms of fitness score. This is 
 	 * used in an extreme situation where population will be stuck indefinitely.
 	 * @param {number} apocalypseGen - The generation in which to trigger mass extinction.
-	 * @author Donnie Marges <dmarges@postmedia.com>
+	 * @author Donnie Marges <donniemarges@gmail.com>
 	 * @version 0.0.1
 	 */
 	apocalypse: function(apocalypseGen) {
@@ -619,7 +619,7 @@ GeneticAlgorithm.prototype = {
 
 	/**
 	 * A Eugenics helper function that gets the top 5% of the population in terms of fitness score. 
-	 * @author Donnie Marges <dmarges@postmedia.com>
+	 * @author Donnie Marges <donniemarges@gmail.com>
 	 * @version 0.0.1
 	 */
 	getElite: function() {

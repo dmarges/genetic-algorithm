@@ -1,7 +1,7 @@
 /**
 	Genetic Algorithm Unit Tests
 	@version 0.0.1
-	@author Don Marges <dmarges@postmedia.com>
+	@author Don Marges <donniemarges@gmail.com>
  */
 
 describe("Creating the Genetic Algorithm", function() {

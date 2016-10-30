@@ -1,6 +1,6 @@
 /**
  * A Genome in this instance is a type of object that will be encoded in a certain way as to attempt to solve a particular problem.
- * @author Donnie Marges <dmarges@postmedia.com>
+ * @author Donnie Marges <donniemarges@gmail.com>
  * @version 0.0.1
  */
 
@@ -10,7 +10,7 @@
  * @param {boolean} isBinary - Is this going to use a binary string to represent solution.
  * @param {number} min - To be used as a the lowest number in a range used for getting a random number.
  * @param {number} max - To be used as a the highest number in a range used for getting a random number.
- * @author Donnie Marges <dmarges@postmedia.com>
+ * @author Donnie Marges <donniemarges@gmail.com>
  * @version 0.0.1
  */
 function Genome(isBinary, min, max) {
@@ -37,7 +37,7 @@ function Genome(isBinary, min, max) {
 
 /**
  * Generalized methods for a genome
- * @author Donnie Marges <dmarges@postmedia.com>
+ * @author Donnie Marges <donniemarges@gmail.com>
  * @version 0.0.1
  */
 Genome.prototype = {
@@ -45,7 +45,7 @@ Genome.prototype = {
 	/**
 	 * Creates a random starting chromosome.
 	 * @param {int} numOfBits - The number of bits that makes up a chromosome
-	 * @author Donnie Marges <dmarges@postmedia.com>
+	 * @author Donnie Marges <donniemarges@gmail.com>
 	 * @version 0.0.1
 	 */	
 	createStartChromosome: function(numOfBits) {
